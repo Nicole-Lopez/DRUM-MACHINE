@@ -1,0 +1,392 @@
+// ***MIXINS***
+
+// SWITCH
+.switchDirection(@a) {
+	@switchOptions: {
+		titleLight: first, last;
+		borderDirection: top, bottom;
+		switchHandle: 45px, 25px;
+		switchHandleTop: 75px, -1em;
+		switchHandleBottom:30px, 50px;
+		switchHandleBase:2em, 3.5em;
+	}
+
+	@title: extract(@switchOptions[titleLight], @a);
+	@border: extract(@switchOptions[borderDirection], @a);
+  
+    &.drumOn .titleKit:@{title}-child{
+		color: #fff;
+		text-shadow: 0 0 10px #fff,
+					0 0 20px #fff;	
+    }
+
+	.switchHandle {
+		top: extract(@switchOptions[switchHandle], @a);
+	}
+
+	.switchHandleTop  {
+		top: extract(@switchOptions[switchHandleTop], @a);
+		border-@{border}: 0.2em solid #AEB2B3;
+	}  
+
+	.switchHandleBottom {
+		top: extract(@switchOptions[switchHandleBottom], @a);
+		border-@{border}: 0.2em solid #141414;
+	}
+
+	.switchHandleBase {
+		top: extract(@switchOptions[switchHandleBase], @a);
+		border-@{border}: 0.2em solid rgba(255,255,255,0.35);
+	}  
+}
+
+
+.switchShape(@width;@height;@border;@zIndex) {
+	height: @height;
+	width: @width;
+	z-index: @zIndex;
+	border-radius: @border;
+}
+
+// POWER
+.switchDirection(@a) {
+	@button: {
+		transformOrigin: 100% 0, 0 0;
+		boxShadow: 2px 0 1px 0 #585858 inset, -2px 0 1px 0 #585858 inset;
+		background: linear-gradient(to right, #ababab 0%, #1f1f1f 1%, #2D2D2D 47%, #4B4B4B 50%, #2D2D2D 100%), linear-gradient(to right, #2D2D2D 0%, #4B4B4B 53%, #2D2D2D 56%, #1f1f1f 99%, #ababab 100%);
+	}
+
+	@light: {
+		backgroundColor: rgb(237 28 36), rgb(237 28 36 / 50%);
+		boxShadow: 0 0 10px 3px #ed5e54, inset 0 0 5px 2px #292727;
+	}
+
+	.togglePower button{
+        transform-origin: extract(@button[transformOrigin], @a);
+		box-shadow: extract(@button[boxShadow], @a);
+	    background: extract(@button[background], @a);
+	}
+
+	&::before{
+		background-color: extract(@light[backgroundColor], @a);
+	    box-shadow: extract(@light[boxShadow], @a);
+	}
+}
+
+
+
+
+//**********************************************************************
+
+
+
+.mainContainer{
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	.padsContainer{
+		position: relative;
+		width: clamp(300px, 80vw, 500px);
+		height: clamp(230px, 60vw, 350px);
+		clip-path: polygon(12% 0%, 88% 0%, 100% 55%, 80% 100%, 60% 100%, 55% 93%, 45% 93%, 40% 100%, 20% 100%, 0% 55%);
+		background-color: #41474e;
+		box-shadow: inset 0px 7px 10px 0px #202020;
+
+		button{
+			margin: 15px;
+		}
+
+		button:nth-child(1){
+			top: 0;
+			left: 10%;
+		}
+
+		button:nth-child(2){
+			top: 0;
+			right: 10%;
+		}
+
+		button:nth-child(3){
+		    bottom: 30%;
+		    left: 2%;
+		}
+
+		button:nth-child(4){
+		    bottom: 35%;
+    		left: 24%;
+		}
+
+		button:nth-child(5){
+		    bottom: 35%;
+    		right: 24%;
+		}
+
+		button:nth-child(6){
+		    bottom: 30%;
+			right: 2%;
+		}
+
+		button:nth-child(7){
+		    bottom: 0;
+			left: 13%;
+		}
+
+		button:nth-child(8){
+		    bottom: 10%;
+			right: 0;
+			left: 0;
+			margin: auto;
+		}
+
+		button:nth-child(9){
+			bottom: 0;
+			right: 13%;
+		}
+	}
+
+
+	.controllsContainer{
+		display: flex;
+		flex-direction: column;
+		width: clamp(260px, 80vw, 500px);
+		background: linear-gradient(90deg, rgba(73,75,88,1) 0%, rgba(79,79,90,1) 61%, rgba(60,61,72,1) 100%);
+		padding: 15px;
+		border: solid #41474e;
+		border-width: clamp(5px, 1vw, 10px);
+	    box-shadow: 0 0px 4px 5px #202020 inset;
+
+		.power{
+			align-self: flex-end;
+
+			.togglePower{ 
+			    width: clamp(30px, 8vw, 50px);
+			    height: clamp(10px, 3vw, 18px);
+			    padding-top: 1px;
+			    background-color: #3a3a3a;
+			    border-radius: 7px;
+				box-shadow: 0 0 2px 1px #09090a, 0 2px 1px -1px rgb(57 57 57 / 70%) inset, 8px 0 5px -5px #202020 inset, -8px 0 5px -5px #202020 inset;
+
+
+				button{
+					height: 100%;
+					width: 100%;
+				    transform: scaleX(0.93);
+				    transition: .1s;
+			        margin-left: 1px;
+				    border-radius: 5px;
+				}
+			}
+
+			&::before{
+		        content: "";
+		        display: block;
+		        margin: 0 auto 30%;
+		        width: clamp(12px, 2vw, 20px);
+		        height: clamp(12px, 2vw, 20px);
+				border-radius: 50%;
+			}
+
+			.activeOrInactive(@size) {
+				.togglePower button{
+			        transform-origin: 100% 0;
+					box-shadow: 2px 0 1px 0 #585858 inset;
+				    background: linear-gradient(to right, #ababab 0%, #1f1f1f 1%, #2D2D2D 47%, #4B4B4B 50%, #2D2D2D 100%);
+				}
+
+				&::before{
+					background-color: rgb(237 28 36);
+				    box-shadow: 0 0 10px 3px #ed5e54;
+				}
+			}
+
+
+			&.active{
+				.switchDirection(1)
+			}	
+
+			&.inactive{
+				.switchDirection(2)
+			}	
+
+		}
+
+		.switchKit{
+		    display: flex;
+		    gap: 40px;
+		    align-self: center;
+		    align-items: center;
+		    justify-content: center;
+
+			.titleKit{
+				width: 20%;
+				font-size: clamp(16px, 4vw + 1rem, 22px);
+				font-family: monospace;
+				font-weight: 900;
+				text-align: center;
+				color: rgb(255 255 255 / 35%);
+				text-shadow: 0 5px 2px #292727;
+			}
+
+			.switch {
+				.switchShape(50px; 100px; 3.5em; 0);		
+				position: relative;
+				transform: rotate(90deg);
+				border: 2px solid #000;
+
+				span{
+					position: absolute;
+					transition: top 0.2s;			
+				}
+
+				&:before,
+				&:after {
+					.switchShape(100%; 100%; 3.4em; 0);	
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;	
+					opacity: .3;
+				}
+
+				&:before {
+					background: linear-gradient(#000, rgba(0,0,0,0));
+				}
+
+				&:after {
+					background: linear-gradient(rgba(0,0,0,0), #000);
+				}
+
+				.switchHandle,
+				.switchHandleTop,
+				.switchHandleBottom,
+				.switchHandleBase {
+					right: 0;
+					left: 0;		
+					margin: auto;
+				}
+
+
+				.switchHandle,
+				.switchHandleBottom {
+					width: 55%;
+					z-index: 3;
+					background: #333;
+					background-image: linear-gradient(to right, #111, #777 40%, #888, #777 60%, #111);
+				}
+
+
+				.switchTop {
+					.switchShape(100%; 84%; 3.4em; 1);	
+					top: 8%;
+					left: 0;
+					background-image: linear-gradient(to right, #2D2D2D, #4B4B4B, #2D2D2D);
+				}
+
+				.switchShadow {
+					.switchShape(100%; 100%; 3.4em; 2);	
+					top: 0;
+					left: 0;
+					box-shadow: 0 0 2em #000000 inset;
+				}
+
+				.switchHandle {				
+					height: 36%;
+				}
+
+				.switchHandleTop {
+					.switchShape(75%; 39%; 2.5em; 4);	
+					background-color: #555;
+					background-image: linear-gradient(to right, #5F5F5F, #878787);
+				}
+
+				.switchHandleBottom {
+					height: 29%;
+					border-radius: 1.8em;
+				}
+
+				.switchHandleBase {
+					.switchShape(64%; 34%; 2.1em; 2);	
+					box-shadow: 0 0 .5em rgba(0,0,0,.8) inset;
+				}
+			}
+
+			&.heater{
+				.switchDirection(1);
+			}
+
+			&.smoothPiano{
+				.switchDirection(2);
+			}
+		}
+
+
+		.volumeControl{
+			display: flex;
+			flex-direction: column;
+		    align-items: center;
+
+			p{
+				width: 70px;
+			    background-color: #a8c4b6;
+				padding: 5px;
+				color: #174059;
+				font: 900 30px 'Digital 7', sans-serif;
+				text-align: center;
+			    border-color: #201d20 #5b6164 #393739;
+			    border-style: solid;
+			    border-width: 7px 8px;
+			    box-shadow: inset 0 0 18px rgb(0 0 0 / 25%);
+			}
+
+
+			@pseudoELemInput: {
+			  webkit-slider-runnable-track: webkit-slider-thumb;
+			  moz-range-track: moz-range-thumb;
+			}
+
+			input[type=range] {
+				background: transparent;
+				height: 41px;
+				-webkit-appearance: none;
+				margin: 10px 0;
+				width: 95%;
+
+				&:focus {
+					outline: none;
+				}
+
+			  	each(@pseudoELemInput, {
+				    &::-@{key}{
+						width: 100%;
+						height: 18px;
+						animate: 0.2s;
+						background: #C5C6D1;
+						border-radius: 8px;
+						border-color: #413e3e #5b6164;
+						border-style: solid;
+						border-width: 5px 7px;    
+				  	}
+
+				    &::-@{value} {
+						border:none;
+					    box-shadow: 0 0 2px 2px rgba(0,0,0,0.68) inset;
+						height: 35px;
+						width: 20px;
+						border-radius: 5px;
+						background: #E4803F;
+						cursor: pointer;
+						appearance: none;
+						margin-top: -15px;      
+				    }
+				});
+
+				&::-moz-range-track{
+					height: 8px;					
+				}
+			}
+		}
+	}
+}
